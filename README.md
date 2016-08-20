@@ -14,7 +14,8 @@ This ruby script can hash any string as SHA-1 would have done
 http://www.sha1-online.com/
 <br/>
 
-TODO: Handle special chars
+TODO: Handle special chars<br/>
+sha-2.rb not working yet
 
 ## Licence
 This project is licensed under the GNU GPL v2. See GPL.txt for details.

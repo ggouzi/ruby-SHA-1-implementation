@@ -18,7 +18,7 @@ end
 def f(t,x,y,z)
 	ret = nil
 	if(t<=19)
-		ret=(x&y)|(reverse(x)&z)
+		ret=(x&y)|(~x&z)
 	elsif(t<=39)
 		ret = x^y^z
 	elsif(t<=59)
@@ -41,12 +41,6 @@ def K(t)
 	end
 end
 
-def reverse(x) # reverse a binary number (Ex: 10010 -> 01001)
-	b = ~x
-	reverse = 31.downto(0).map { |n| b[n] }.join
-	reverse.to_i(2)
-end
-
 # END FUNCTIONS
 
 
@@ -67,7 +61,7 @@ h4= [0xc3d2e1f0]
 
 l = message.length*nbBits
 
-k = 448 -  ( (l+1) % (2**32) )
+k = 448 -  ( (l+1) & 0xffffffff )
 
 while (k<0)
 	k = k + 512
@@ -123,7 +117,7 @@ for i in 1..n
 
 	total = nil
 	for t in 0..79
-		total = (rotl(5,a).to_i(2) + f(t,b,c,d) + e + K(t) + w[t].to_i(2)) %  (2**32)
+		total = (rotl(5,a).to_i(2) + f(t,b,c,d) + e + K(t) + w[t].to_i(2)) & 0xffffffff
 		e = d
 		d = c
 		c = rotl(30, b).to_i(2)
@@ -133,11 +127,11 @@ for i in 1..n
 
 	# 4
 
-	h0.push( (a+h0[i-1]) % (2**32))
-	h1.push( (b+h1[i-1]) % (2**32))
-	h2.push( (c+h2[i-1]) % (2**32))
-	h3.push( (d+h3[i-1]) % (2**32))
-	h4.push( (e+h4[i-1]) % (2**32))
+	h0.push( (a+h0[i-1]) & 0xffffffff)
+	h1.push( (b+h1[i-1]) & 0xffffffff)
+	h2.push( (c+h2[i-1]) & 0xffffffff)
+	h3.push( (d+h3[i-1]) & 0xffffffff)
+	h4.push( (e+h4[i-1]) & 0xffffffff)
 end
 
 # END HASH
