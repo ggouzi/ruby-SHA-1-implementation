@@ -8,10 +8,7 @@ $scriptname="sha-2.rb"
 # FUNCTIONS
 
 def rotr(n,x) # rotate right
-	a = x.to_s(2)
-	b = a[a.length-n, a.length].to_s+a[0,a.length-n].to_s[0..32]
-	ret = ((x>>n) | (x<<(32-n))).to_s(2)
-	return ret
+	ret = ((x>>n) | (x<<(32-n))).to_s(2).reverse[0...32].reverse # reverse+reverse to get the 32 last chars (and so fix length)
 end
 
 def get2Dcell(m, i, j) # get a cell from a 2D array m
@@ -27,11 +24,11 @@ def Sig1_256(x)
 end
 
 def sig0_256(x)
-	return (rotr(7,x).to_i(2))^(rotr(18,x).to_i(2))^(x>>3)
+	return rotr(7,x).to_i(2)^rotr(18,x).to_i(2)^(x>>3)
 end
 
 def sig1_256(x)
-	return (rotr(17,x).to_i(2))^(rotr(19,x).to_i(2))^(x>>10)
+	return rotr(17,x).to_i(2)^rotr(19,x).to_i(2)^(x>>10)
 end
 
 def ch(x,y,z)
@@ -172,7 +169,8 @@ def encode(message)
 				w.push(val)
 			else
 				val = ( sig1_256(w[t-2].to_i(2)) + w[t-7].to_i(2) + sig0_256(w[t-15].to_i(2)) + w[t-16].to_i(2) ) & 0xffffffff
-				w.push(val.to_s)
+				val = val.to_s(2)
+				w.push(val)
 			end
 		end
 
