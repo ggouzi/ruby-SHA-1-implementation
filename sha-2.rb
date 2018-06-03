@@ -190,7 +190,7 @@ def encode(message)
 			c = b
 			b = a
 			a = (total1 + total2) & 0xffffffff
-			puts t.to_s+"-a-"+a.to_s(16)+"-b-"+b.to_s(16)+"-c-"+c.to_s(16)+"-d-"+d.to_s(16)+"-e-"+e.to_s(16)+"-f-"+f.to_s(16)+"-g-"+g.to_s(16)+"-h-"+h.to_s(16)
+			#puts t.to_s+"-a-"+a.to_s(16)+"-b-"+b.to_s(16)+"-c-"+c.to_s(16)+"-d-"+d.to_s(16)+"-e-"+e.to_s(16)+"-f-"+f.to_s(16)+"-g-"+g.to_s(16)+"-h-"+h.to_s(16)
 
 		end
 
